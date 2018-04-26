@@ -315,5 +315,21 @@ public class zcDatabase {
         }
         return null;
     }
+    
+    public HashMap<Object, Object> DML1(String qry) {
+        try {
+            HashMap<Object, Object> item = new HashMap<>();
+            ps = con.prepareStatement(qry);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                item.put(rs.getString(2), rs.getString(1));
+            }
+            return item;
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(null,val.printError(e.getClass(),e.getMessage(),getClass().getName()),"Error",JOptionPane.ERROR_MESSAGE);
+        }
+        return null;
+    }
 }
     

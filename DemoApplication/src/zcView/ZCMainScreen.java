@@ -210,7 +210,7 @@ public class ZCMainScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void zcCreditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zcCreditActionPerformed
-        
+        zcOpen.frame(new zcCredit(), rkDP);
     }//GEN-LAST:event_zcCreditActionPerformed
 
     private void zcSettingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zcSettingActionPerformed
