@@ -222,7 +222,7 @@ public class ZCMainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_zcHomeActionPerformed
 
     private void zcDebitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zcDebitActionPerformed
-        
+        zcOpen.frame(new zcDebit(), rkDP);
     }//GEN-LAST:event_zcDebitActionPerformed
 
     private void RKLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RKLoginActionPerformed

@@ -20,12 +20,12 @@ import zcController.zcDatabase;
  *
  * @author rk
  */
-public class zcCredit extends javax.swing.JInternalFrame {
+public class zcDebit extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form zcCredit
      */
-    public zcCredit() {
+    public zcDebit() {
         initComponents();
         con = zcController.zcConnection.rkConnection();
         db.rkAutoCompleted(new JComboBox[]{zc_Day, zc_Month, zc_Year, zcAC_Number});
@@ -61,7 +61,7 @@ public class zcCredit extends javax.swing.JInternalFrame {
 
         setBackground(new java.awt.Color(61, 51, 51));
         setClosable(true);
-        setTitle("Credit");
+        setTitle("Debit");
 
         zcAC_Number.setEditable(true);
         zcAC_Number.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Account Number" }));
@@ -177,6 +177,8 @@ public class zcCredit extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        getAccessibleContext().setAccessibleName("Debit");
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -185,27 +187,155 @@ public class zcCredit extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_zc_YearActionPerformed
 
     private void zcAC_holderAmountKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_zcAC_holderAmountKeyTyped
-
+        /*if(!Character.isDigit(evt.getKeyChar()) || evt.getKeyCode() == 46){
+            
+        }*/
     }//GEN-LAST:event_zcAC_holderAmountKeyTyped
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         try {
-            
             if ((0 == zcAC_Number.getSelectedIndex()) || (0 == zc_Day.getSelectedIndex()) || (0 == zc_Month.getSelectedIndex()) || (0 == zc_Year.getSelectedIndex())) {
                 JOptionPane.showMessageDialog(this, "Full fill all details", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                ps = con.prepareStatement("INSERT INTO `zctransaction`(`zcACID`, `zcACNumber`, `zcAmount`, `zcACtype`, `zcDay`, `zcMonth`, `zcYear`) VALUES (?,?,?,?,?,?,?)");
-                ps.setString(1, (String) AC_Number.get(zcAC_Number.getSelectedItem()));
-                ps.setString(2, (String) zcAC_Number.getSelectedItem());
-                ps.setString(3, zcAC_holderAmount.getText());
-                ps.setString(4, "Credit");
-                ps.setString(5, (String) zc_Day.getSelectedItem());                
-                ps.setString(6, (String) zc_Month.getSelectedItem());
-                ps.setString(7, (String) zc_Year.getSelectedItem());   
-                ps.execute();
+                ps = con.prepareStatement("SELECT * FROM `zctransaction` where zcACNumber='" + zcAC_Number.getSelectedItem() + "'ORDER BY `zctransaction`.`id` ASC LIMIT 1");
+                rs = ps.executeQuery();
+                if (rs.next()) {
+                    int zcMonth = rs.getInt("zcMonth");
+                    int zcDay = rs.getInt("zcDay");
+                    rs.close();
+                    ps.close();
+                    switch (zcMonth) {
+                        case 1:
+                            if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 7) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                    setDebit(true);
+                                }else
+                                    setDebit(false);
+                            }else
+                                    setDebit(false);
+                            break;
+                        case 2:
+                            if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 8) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                    setDebit(true);
+                                }else
+                                    setDebit(false);
+                            }else
+                                    setDebit(false);
+                            break;
+                        case 3:
+                            if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 9) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                    setDebit(true);
+                                }else
+                                    setDebit(false);
+                            }else
+                                    setDebit(false);
+                            break;
+                        case 4:
+                            if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 10) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                    setDebit(true);
+                                    System.out.println(zc_Day.getSelectedItem());
+                                    System.out.println(zcDay);
+                                }else
+                                    setDebit(false);
+                            }else
+                                    setDebit(false);
+                            break;
+                        case 5:
+                            if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 11) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                    setDebit(true);
+                                }else
+                                    setDebit(false);
+                            }else
+                                    setDebit(false);
+                            break;
+                        case 6:
+                            if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 12) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                    setDebit(true);
+                                }else
+                                    setDebit(false);
+                            }else
+                                    setDebit(false);
+                            break;
+                        case 7:
+                            if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 1) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                    setDebit(true);
+                                }else
+                                    setDebit(false);
+                            }else
+                                    setDebit(false);
+                            break;
+                        case 8:
+                            if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 2) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                    setDebit(true);
+                                }else
+                                    setDebit(false);
+                            }else
+                                    setDebit(false);
+                            break;
+                        case 9:
+                            if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 3) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                    setDebit(true);
+                                }else
+                                    setDebit(false);
+                            }else
+                                    setDebit(false);
+                            break;
+                        case 10:
+                            if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 4) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                    setDebit(true);
+                                }else
+                                    setDebit(false);
+                            }else
+                                    setDebit(false);
+                            break;
+                        case 11:
+                            if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 5) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                    setDebit(true);
+                                }else
+                                    setDebit(false);
+                            }else
+                                    setDebit(false);
+                            break;
+                        case 12:
+                            if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 6) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                    setDebit(true);
+                                }else
+                                    setDebit(false);
+                            }else
+                                    setDebit(false);
+                            break;
+                    }
+
+                    if (isDebit()) {
+                        ps = con.prepareStatement("SELECT SUM(zcAmount) FROM zctransaction where zcACNumber = '"+zcAC_Number.getSelectedItem()+"'");
+                        rs = ps.executeQuery();
+                        if(rs.next()){
+                            double totalAmount = rs.getInt(1);
+                            double returnAmount = (totalAmount*80)/100;
+                            if(returnAmount>=Double.parseDouble(zcAC_holderAmount.getText())){
+                                JOptionPane.showMessageDialog(this,"you are not able to withdraw money,did't withdraw more then 80% amount");
+                            }else{
+                                // Write Code To Add To Data Base;
+                            }
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(this, "can't possible debit money");
+                    }
+                }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(zcCredit.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(zcDebit.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnSaveActionPerformed
 
@@ -242,4 +372,13 @@ public class zcCredit extends javax.swing.JInternalFrame {
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
+    private boolean debit;
+
+    public boolean isDebit() {
+        return debit;
+    }
+
+    public void setDebit(boolean debit) {
+        this.debit = debit;
+    }
 }
