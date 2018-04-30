@@ -9,12 +9,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import zcController.zcDatabase;
+import zcController.zcTransaction;
 
 /**
  *
@@ -61,7 +66,7 @@ public class zcDebit extends javax.swing.JInternalFrame {
 
         setBackground(new java.awt.Color(61, 51, 51));
         setClosable(true);
-        setTitle("Debit");
+        setTitle("Withdraw");
 
         zcAC_Number.setEditable(true);
         zcAC_Number.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Account Number" }));
@@ -177,8 +182,6 @@ public class zcDebit extends javax.swing.JInternalFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getAccessibleContext().setAccessibleName("Debit");
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -202,6 +205,7 @@ public class zcDebit extends javax.swing.JInternalFrame {
                 if (rs.next()) {
                     int zcMonth = rs.getInt("zcMonth");
                     int zcDay = rs.getInt("zcDay");
+                    int zcYear = rs.getInt("zcYear");
                     rs.close();
                     ps.close();
                     switch (zcMonth) {
@@ -209,28 +213,34 @@ public class zcDebit extends javax.swing.JInternalFrame {
                             if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 7) {
                                 if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
                                     setDebit(true);
-                                }else
+                                } else {
                                     setDebit(false);
-                            }else
-                                    setDebit(false);
+                                }
+                            } else {
+                                setDebit(false);
+                            }
                             break;
                         case 2:
                             if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 8) {
                                 if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
                                     setDebit(true);
-                                }else
+                                } else {
                                     setDebit(false);
-                            }else
-                                    setDebit(false);
+                                }
+                            } else {
+                                setDebit(false);
+                            }
                             break;
                         case 3:
                             if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 9) {
                                 if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
                                     setDebit(true);
-                                }else
+                                } else {
                                     setDebit(false);
-                            }else
-                                    setDebit(false);
+                                }
+                            } else {
+                                setDebit(false);
+                            }
                             break;
                         case 4:
                             if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 10) {
@@ -238,99 +248,219 @@ public class zcDebit extends javax.swing.JInternalFrame {
                                     setDebit(true);
                                     System.out.println(zc_Day.getSelectedItem());
                                     System.out.println(zcDay);
-                                }else
+                                } else {
                                     setDebit(false);
-                            }else
-                                    setDebit(false);
+                                }
+                            } else {
+                                setDebit(false);
+                            }
                             break;
                         case 5:
                             if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 11) {
                                 if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
                                     setDebit(true);
-                                }else
+                                } else {
                                     setDebit(false);
-                            }else
-                                    setDebit(false);
+                                }
+                            } else {
+                                setDebit(false);
+                            }
                             break;
                         case 6:
                             if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 12) {
                                 if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
                                     setDebit(true);
-                                }else
+                                } else {
                                     setDebit(false);
-                            }else
-                                    setDebit(false);
+                                }
+                            } else {
+                                setDebit(false);
+                            }
                             break;
                         case 7:
                             if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 1) {
-                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay && Integer.parseInt(zc_Year.getSelectedItem().toString()) > zcYear) {
                                     setDebit(true);
-                                }else
+                                } else {
                                     setDebit(false);
-                            }else
-                                    setDebit(false);
+                                }
+                            } else {
+                                setDebit(false);
+                            }
                             break;
                         case 8:
                             if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 2) {
-                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay && Integer.parseInt(zc_Year.getSelectedItem().toString()) > zcYear) {
                                     setDebit(true);
-                                }else
+                                } else {
                                     setDebit(false);
-                            }else
-                                    setDebit(false);
+                                }
+                            } else {
+                                setDebit(false);
+                            }
                             break;
                         case 9:
                             if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 3) {
-                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay && Integer.parseInt(zc_Year.getSelectedItem().toString()) > zcYear) {
                                     setDebit(true);
-                                }else
+                                } else {
                                     setDebit(false);
-                            }else
-                                    setDebit(false);
+                                }
+                            } else {
+                                setDebit(false);
+                            }
                             break;
                         case 10:
                             if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 4) {
-                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay && Integer.parseInt(zc_Year.getSelectedItem().toString()) > zcYear) {
                                     setDebit(true);
-                                }else
+                                } else {
                                     setDebit(false);
-                            }else
-                                    setDebit(false);
+                                }
+                            } else {
+                                setDebit(false);
+                            }
                             break;
                         case 11:
                             if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 5) {
-                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay && Integer.parseInt(zc_Year.getSelectedItem().toString()) >= zcYear) {
                                     setDebit(true);
-                                }else
+                                } else {
                                     setDebit(false);
-                            }else
-                                    setDebit(false);
+                                }
+                            } else {
+                                setDebit(false);
+                            }
                             break;
                         case 12:
                             if (Integer.parseInt(zc_Month.getSelectedItem().toString()) >= 6) {
-                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay) {
+                                if (Integer.parseInt(zc_Day.getSelectedItem().toString()) >= zcDay && Integer.parseInt(zc_Year.getSelectedItem().toString()) > zcYear) {
                                     setDebit(true);
-                                }else
+                                } else {
                                     setDebit(false);
-                            }else
-                                    setDebit(false);
+                                }
+                            } else {
+                                setDebit(false);
+                            }
                             break;
                     }
 
                     if (isDebit()) {
-                        ps = con.prepareStatement("SELECT SUM(zcAmount) FROM zctransaction where zcACNumber = '"+zcAC_Number.getSelectedItem()+"'");
-                        rs = ps.executeQuery();
-                        if(rs.next()){
-                            double totalAmount = rs.getInt(1);
-                            double returnAmount = (totalAmount*80)/100;
-                            if(returnAmount>=Double.parseDouble(zcAC_holderAmount.getText())){
-                                JOptionPane.showMessageDialog(this,"you are not able to withdraw money,did't withdraw more then 80% amount");
-                            }else{
-                                // Write Code To Add To Data Base;
+                        String currentDate = zc_Day.getSelectedItem() + "/" + zc_Month.getSelectedItem() + "/" + zc_Year.getSelectedItem();
+                        if (isWithdraw()) {
+                            System.out.println("One Time those person can withdraw money");
+                            ps = con.prepareStatement("SELECT * FROM `zctransaction` WHERE `zcACNumber`='" + zcAC_Number.getSelectedItem() + "' ORDER BY id DESC");
+                            rs = ps.executeQuery();
+                            if (rs.next()) {
+                                double totalAmount = rs.getDouble("totalCredit");
+                                double returnAmount = (totalAmount * 80) / 100;
+                                double roi = 0.0;
+                                double totalDays;
+                                double rateOfinterest = 0.0;
+                                double rateOfinterestTotal = 0.0;
+                                double perDayInterest = 0.0;
+                                ps.close();
+                                rs.close();
+
+                                if (Double.parseDouble(zcAC_holderAmount.getText()) >= returnAmount) {
+                                    JOptionPane.showMessageDialog(this, "can't withdraw amount more then " + returnAmount);
+                                } else {
+                                    ps = con.prepareStatement("SELECT * FROM `zctransaction` WHERE `zcACNumber`='" + zcAC_Number.getSelectedItem() + "' ORDER BY id DESC");
+                                    rs = ps.executeQuery();
+                                    while (rs.next()) {
+                                        if ("Debit".equals(rs.getString("zcACtype"))) {
+                                            String investmentDate = rs.getString("zcDay") + "/" + rs.getString("zcMonth") + "/" + rs.getString("zcYear");
+                                            totalDays = zcController.zcCountDay.getDiiff(investmentDate, currentDate);
+                                            roi = totalDays * 0.010958904;
+                                            perDayInterest = rs.getDouble("totalCredit");
+                                            rateOfinterest = (perDayInterest * roi) / 100;
+                                            rateOfinterestTotal += rateOfinterest;
+                                            perDayInterest = 0.0;
+                                            System.out.println("Debit Amount");
+                                            System.out.println("Total Days :- " + totalDays);
+                                            System.out.println("Rate of Interest :- " + rateOfinterest);
+                                            System.out.println("Total Rate of Interest :- " + rateOfinterestTotal);
+                                            System.out.println("----------------------------------------------------");
+
+                                            break;
+                                        } else {
+                                            String investmentDate = rs.getString("zcDay") + "/" + rs.getString("zcMonth") + "/" + rs.getString("zcYear");
+                                            totalDays = zcController.zcCountDay.getDiiff(investmentDate, currentDate);
+                                            roi = totalDays * 0.010958904;
+                                            perDayInterest = rs.getDouble("zcAmount");
+                                            rateOfinterest = (perDayInterest * roi) / 100;
+                                            rateOfinterestTotal += rateOfinterest;
+                                            perDayInterest = 0.0;
+                                            System.out.println("Total Days :- " + totalDays);
+                                            System.out.println("Rate of Interest :- " + rateOfinterest);
+                                            System.out.println("Total Rate of Interest :- " + rateOfinterestTotal);
+                                            System.out.println("----------------------------------------------------");
+
+                                        }
+                                    }
+                                    ps = con.prepareStatement("INSERT INTO `zctransaction`(`zcACID`, `zcACNumber`, `zcAmount`, `zcACtype`, `zcDay`, `zcMonth`, `zcYear`,`totalCredit`,`rate`) VALUES (?,?,?,?,?,?,?,?,?)");
+                                    ps.setString(1, (String) AC_Number.get(zcAC_Number.getSelectedItem()));
+                                    ps.setString(2, (String) zcAC_Number.getSelectedItem());
+                                    ps.setString(3, zcAC_holderAmount.getText());
+                                    ps.setString(4, "Debit");
+                                    ps.setString(5, (String) zc_Day.getSelectedItem());
+                                    ps.setString(6, (String) zc_Month.getSelectedItem());
+                                    ps.setString(7, (String) zc_Year.getSelectedItem());
+                                    ps.setDouble(8, totalAmount - Double.parseDouble(zcAC_holderAmount.getText()));
+                                    ps.setDouble(9, rateOfinterestTotal);
+                                    ps.execute();
+                                    JOptionPane.showMessageDialog(this, "Your Amount Sucessfully Withdraw");
+                                    this.hide();
+                                }
+                            }
+                        } else {
+                            ps = con.prepareStatement("SELECT SUM(zcAmount) FROM zctransaction where zcACNumber = '" + zcAC_Number.getSelectedItem() + "'");
+                            rs = ps.executeQuery();
+                            if (rs.next()) {
+                                double totalAmount = rs.getDouble(1);
+                                double returnAmount = (totalAmount * 80) / 100;
+                                double roi = 0.0;
+                                double totalDays;
+                                double rateOfinterest = 0.0;
+                                double rateOfinterestTotal = 0.0;
+                                double perDayInterest = 0.0;
+                                ps.close();
+                                rs.close();
+
+                                if (Double.parseDouble(zcAC_holderAmount.getText()) >= returnAmount) {
+                                    JOptionPane.showMessageDialog(this, "can't withdraw amount more then " + returnAmount);
+                                } else {
+                                    ps = con.prepareStatement("SELECT * FROM `zctransaction` WHERE `zcACNumber`='" + zcAC_Number.getSelectedItem() + "'");
+                                    rs = ps.executeQuery();
+                                    while (rs.next()) {
+                                        String investmentDate = rs.getString("zcDay") + "/" + rs.getString("zcMonth") + "/" + rs.getString("zcYear");
+                                        totalDays = zcController.zcCountDay.getDiiff(investmentDate, currentDate);
+                                        roi = totalDays * 0.010958904;
+                                        perDayInterest = rs.getDouble("zcAmount");
+                                        rateOfinterest = (perDayInterest * roi) / 100;
+                                        rateOfinterestTotal += rateOfinterest;
+                                        perDayInterest = 0.0;
+                                    }
+                                    ps = con.prepareStatement("INSERT INTO `zctransaction`(`zcACID`, `zcACNumber`, `zcAmount`, `zcACtype`, `zcDay`, `zcMonth`, `zcYear`,`totalCredit`,`rate`) VALUES (?,?,?,?,?,?,?,?,?)");
+                                    ps.setString(1, (String) AC_Number.get(zcAC_Number.getSelectedItem()));
+                                    ps.setString(2, (String) zcAC_Number.getSelectedItem());
+                                    ps.setString(3, zcAC_holderAmount.getText());
+                                    ps.setString(4, "Debit");
+                                    ps.setString(5, (String) zc_Day.getSelectedItem());
+                                    ps.setString(6, (String) zc_Month.getSelectedItem());
+                                    ps.setString(7, (String) zc_Year.getSelectedItem());
+                                    ps.setDouble(8, totalAmount - Double.parseDouble(zcAC_holderAmount.getText()));
+                                    ps.setDouble(9, rateOfinterestTotal);
+                                    ps.execute();
+                                    JOptionPane.showMessageDialog(this, "Your Amount Sucessfully Withdraw");
+                                    this.hide();
+                                }
+                            } else {
+                                System.out.println("record can't find");
                             }
                         }
                     } else {
-                        JOptionPane.showMessageDialog(this, "can't possible debit money");
+                        JOptionPane.showMessageDialog(this, "can't withdraw amount before 6 month");
                     }
                 }
             }
@@ -344,8 +474,6 @@ public class zcDebit extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_zcAC_NumberActionPerformed
 
     private void zcAC_NumberItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_zcAC_NumberItemStateChanged
-        System.out.println(AC_Number.get(zcAC_Number.getSelectedItem()));
-        System.out.println(AC_Name.get(zcAC_Number.getSelectedItem()));
         zcAC_holderName.setText((String) AC_Name.get(zcAC_Number.getSelectedItem()));
     }//GEN-LAST:event_zcAC_NumberItemStateChanged
 
@@ -369,6 +497,7 @@ public class zcDebit extends javax.swing.JInternalFrame {
     zcDatabase db = new zcDatabase();
     HashMap<Object, Object> AC_Name = new HashMap<>();
     HashMap<Object, Object> AC_Number = new HashMap<>();
+    List<zcTransaction> list = new ArrayList<>();
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
@@ -380,5 +509,48 @@ public class zcDebit extends javax.swing.JInternalFrame {
 
     public void setDebit(boolean debit) {
         this.debit = debit;
+    }
+
+    private String toDate(long timestamp) {
+        Date date = new Date(timestamp * 1000);
+        return new SimpleDateFormat("dd/MM/yyyy").format(date);
+    }
+
+    private boolean isWithdraw() {
+        try {
+            ps = con.prepareStatement("SELECT * FROM `zctransaction` WHERE `zcACNumber` = '" + zcAC_Number.getSelectedItem() + "' && `zcACtype`='Debit'");
+            rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private List<zcTransaction> zcTrasaction() {
+        try {
+            ps = con.prepareStatement("SELECT * FROM zctransaction where zcACNumber = '" + zcAC_Number.getSelectedItem() + "'");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                zcTransaction transaction = new zcTransaction(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getInt(3),
+                        rs.getDouble(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getDouble(10),
+                        rs.getDouble(11));
+                list.add(transaction);
+            }
+            ps.close();
+            rs.close();
+            return list;
+        } catch (SQLException E) {
+            return null;
+        }
     }
 }

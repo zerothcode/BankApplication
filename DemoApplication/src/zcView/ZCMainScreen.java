@@ -1,6 +1,5 @@
 package zcView;
 
-import java.awt.Toolkit;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -24,7 +23,7 @@ public class ZCMainScreen extends javax.swing.JFrame {
     public ZCMainScreen(String value){
         initComponents();
         this.setLocationRelativeTo(null);
-    //    this.setIconImage(Toolkit.getDefaultToolkit().getImage("RKinfotech/Image/RKLogo.png"));
+    //  this.setIconImage(Toolkit.getDefaultToolkit().getImage("RKinfotech/Image/RKLogo.png"));
     }
 
     /**
@@ -52,7 +51,7 @@ public class ZCMainScreen extends javax.swing.JFrame {
         rkDP = new javax.swing.JDesktopPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("PMS");
+        setTitle("Banking System");
         setBackground(new java.awt.Color(61, 51, 51));
         setForeground(new java.awt.Color(61, 51, 51));
         setResizable(false);
@@ -63,7 +62,8 @@ public class ZCMainScreen extends javax.swing.JFrame {
         zcCredit.setBackground(new java.awt.Color(51, 51, 255));
         zcCredit.setFont(new java.awt.Font("DejaVu Sans", 3, 14)); // NOI18N
         zcCredit.setForeground(new java.awt.Color(255, 255, 255));
-        zcCredit.setText("Credit");
+        zcCredit.setText("Deposits");
+        zcCredit.setToolTipText("");
         zcCredit.setEnabled(false);
         zcCredit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -74,7 +74,7 @@ public class ZCMainScreen extends javax.swing.JFrame {
         zcDebit.setBackground(new java.awt.Color(51, 51, 255));
         zcDebit.setFont(new java.awt.Font("DejaVu Sans", 3, 14)); // NOI18N
         zcDebit.setForeground(new java.awt.Color(255, 255, 255));
-        zcDebit.setText("Debit");
+        zcDebit.setText("withdraw");
         zcDebit.setEnabled(false);
         zcDebit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -273,7 +273,7 @@ public class ZCMainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_zcLogoutActionPerformed
 
     private void zcReportsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zcReportsActionPerformed
-        zcOpen.frame(new zcCredit(), rkDP);
+        zcOpen.frame(new zcYearlyReport(), rkDP);
     }//GEN-LAST:event_zcReportsActionPerformed
 
     /**
@@ -326,4 +326,5 @@ public class ZCMainScreen extends javax.swing.JFrame {
     private javax.swing.JTextField zcUserName;
     // End of variables declaration//GEN-END:variables
     zcDatabase db = new zcDatabase();
+    
 }

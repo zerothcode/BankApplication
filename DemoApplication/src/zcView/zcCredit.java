@@ -9,13 +9,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import zcController.zcDatabase;
-
+import java.text.SimpleDateFormat;
 /**
  *
  * @author rk
@@ -61,7 +62,7 @@ public class zcCredit extends javax.swing.JInternalFrame {
 
         setBackground(new java.awt.Color(61, 51, 51));
         setClosable(true);
-        setTitle("Credit");
+        setTitle("Deposits");
 
         zcAC_Number.setEditable(true);
         zcAC_Number.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Account Number" }));
@@ -190,19 +191,50 @@ public class zcCredit extends javax.swing.JInternalFrame {
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
         try {
-            
             if ((0 == zcAC_Number.getSelectedIndex()) || (0 == zc_Day.getSelectedIndex()) || (0 == zc_Month.getSelectedIndex()) || (0 == zc_Year.getSelectedIndex())) {
                 JOptionPane.showMessageDialog(this, "Full fill all details", "Error", JOptionPane.ERROR_MESSAGE);
             } else {
-                ps = con.prepareStatement("INSERT INTO `zctransaction`(`zcACID`, `zcACNumber`, `zcAmount`, `zcACtype`, `zcDay`, `zcMonth`, `zcYear`) VALUES (?,?,?,?,?,?,?)");
-                ps.setString(1, (String) AC_Number.get(zcAC_Number.getSelectedItem()));
-                ps.setString(2, (String) zcAC_Number.getSelectedItem());
-                ps.setString(3, zcAC_holderAmount.getText());
-                ps.setString(4, "Credit");
-                ps.setString(5, (String) zc_Day.getSelectedItem());                
-                ps.setString(6, (String) zc_Month.getSelectedItem());
-                ps.setString(7, (String) zc_Year.getSelectedItem());   
-                ps.execute();
+                String msg = "<html>"
+                        + "<table weight='250' height='250' border='1'>"
+                        + "<tr><td>Date</td><td>" + zc_Day.getSelectedItem() + "/" + zc_Month.getSelectedItem() + "/" + zc_Year.getSelectedItem() + "</td><tr>"
+                        + "<tr><td>Amount</td><td>" + zcAC_holderAmount.getText() + "</td><tr>"
+                        + "</table>";
+                int asn = JOptionPane.showConfirmDialog(this, msg, "Confirm", JOptionPane.INFORMATION_MESSAGE,JOptionPane.YES_NO_OPTION);
+                double totalAmount=0,creditAmount=0,debitAmount=0;
+                if (asn > 0) {
+                } else {
+                    ps = con.prepareStatement("SELECT SUM(zcAmount) FROM zctransaction where zcACNumber = '"+zcAC_Number.getSelectedItem()+"' && zcACtype='Credit'");
+                    rs= ps.executeQuery();
+                    if(rs.next()){
+                        creditAmount=rs.getDouble(1);
+                        rs.close();
+                        ps.close();
+                    }
+                    
+                    ps = con.prepareStatement("SELECT SUM(zcAmount) FROM zctransaction where zcACNumber = '"+zcAC_Number.getSelectedItem()+"' && zcACtype='Debit'");
+                    rs= ps.executeQuery();
+                    if(rs.next()){
+                        debitAmount=rs.getDouble(1);
+                        rs.close();
+                        ps.close();
+                    }
+                    totalAmount=creditAmount-debitAmount;
+                    System.out.println("Debit Amount :-"+debitAmount);
+                    System.out.println("Credit Amount :-"+creditAmount);
+                    System.out.println("Total :-" +totalAmount);
+                    ps = con.prepareStatement("INSERT INTO `zctransaction`(`zcACID`, `zcACNumber`, `zcAmount`, `zcACtype`, `zcDay`, `zcMonth`, `zcYear`,`totalCredit`) VALUES (?,?,?,?,?,?,?,?)");
+                    ps.setString(1, (String) AC_Number.get(zcAC_Number.getSelectedItem()));
+                    ps.setString(2, (String) zcAC_Number.getSelectedItem());
+                    ps.setString(3, zcAC_holderAmount.getText());
+                    ps.setString(4, "Credit");
+                    ps.setString(5, (String) zc_Day.getSelectedItem());
+                    ps.setString(6, (String) zc_Month.getSelectedItem());
+                    ps.setString(7, (String) zc_Year.getSelectedItem());
+                    ps.setDouble(8, (totalAmount+Double.parseDouble(zcAC_holderAmount.getText())));
+                    ps.execute();
+                    JOptionPane.showMessageDialog(this, "Your Amount Sucessfully Credit");
+                    this.hide();
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(zcCredit.class.getName()).log(Level.SEVERE, null, ex);
@@ -214,8 +246,6 @@ public class zcCredit extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_zcAC_NumberActionPerformed
 
     private void zcAC_NumberItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_zcAC_NumberItemStateChanged
-        System.out.println(AC_Number.get(zcAC_Number.getSelectedItem()));
-        System.out.println(AC_Name.get(zcAC_Number.getSelectedItem()));
         zcAC_holderName.setText((String) AC_Name.get(zcAC_Number.getSelectedItem()));
     }//GEN-LAST:event_zcAC_NumberItemStateChanged
 
@@ -242,4 +272,9 @@ public class zcCredit extends javax.swing.JInternalFrame {
     Connection con;
     PreparedStatement ps;
     ResultSet rs;
+    
+    private String toDate(long timestamp) {
+        Date date = new Date (timestamp * 1000);
+        return new SimpleDateFormat("dd/MM/yyyy").format(date);
+    }
 }
