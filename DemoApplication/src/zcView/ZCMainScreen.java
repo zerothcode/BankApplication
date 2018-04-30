@@ -18,12 +18,18 @@ public class ZCMainScreen extends javax.swing.JFrame {
      * Creates new form RKlogin
      */
     public ZCMainScreen() {
-            
+
     }
-    public ZCMainScreen(String value){
-        initComponents();
-        this.setLocationRelativeTo(null);
-    //  this.setIconImage(Toolkit.getDefaultToolkit().getImage("RKinfotech/Image/RKLogo.png"));
+
+    public ZCMainScreen(String value) {
+        if (!(new rkLicense().check())) {
+            initComponents();
+            this.setLocationRelativeTo(null);
+        } else {
+            new zcView.Zerothcode().show();
+            this.hide();
+        }
+        //  this.setIconImage(Toolkit.getDefaultToolkit().getImage("RKinfotech/Image/RKLogo.png"));
     }
 
     /**
@@ -218,7 +224,7 @@ public class ZCMainScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_zcSettingActionPerformed
 
     private void zcHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zcHomeActionPerformed
-       
+
     }//GEN-LAST:event_zcHomeActionPerformed
 
     private void zcDebitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_zcDebitActionPerformed
@@ -326,5 +332,5 @@ public class ZCMainScreen extends javax.swing.JFrame {
     private javax.swing.JTextField zcUserName;
     // End of variables declaration//GEN-END:variables
     zcDatabase db = new zcDatabase();
-    
+
 }
